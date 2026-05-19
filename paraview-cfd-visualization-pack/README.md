@@ -1,6 +1,6 @@
 # ParaView CFD Visualization Pack: Airflow, Pressure, and Vorticity Around an Airfoil
 
-This pack demonstrates a reproducible ParaView asset-production workflow for scientific visualization review. It turns a generated airfoil flow-field dataset into clean screenshots, ParaView state files, and a short animation.
+This pack extends the URP airfoil/CGNS visualization work from an RPI Undergraduate Research Project with [Dr. Shaowu Pan](https://faculty.rpi.edu/shaowu-pan). It demonstrates a reproducible ParaView asset-production workflow for scientific visualization review by turning a generated airfoil flow-field dataset into clean screenshots, ParaView state files, and a short animation.
 
 ## Reviewer Path
 
@@ -33,4 +33,4 @@ The script regenerates the VTK data, ParaView state files, screenshots, animatio
 
 ## Scope Note
 
-The flow field is synthetic CFD-style data generated for visualization workflow evaluation. It is not claimed as validated CFD solver output. The purpose is to demonstrate ParaView data loading, pipeline construction, scalar/vector inspection, screenshot export, animation export, and reviewer-facing documentation.
+The flow field is synthetic CFD-style data generated for visualization workflow evaluation. It is not claimed as validated CFD solver output. The purpose is to demonstrate ParaView data loading, pipeline construction, scalar/vector inspection, screenshot export, animation export, and reviewer-facing documentation alongside the original URP CGNS mesh context.

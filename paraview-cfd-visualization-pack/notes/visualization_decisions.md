@@ -2,7 +2,7 @@
 
 ## Dataset
 
-The dataset is a synthetic CFD-style airfoil flow field. It contains:
+This pack sits on top of the URP airfoil/CGNS visualization work from an RPI Undergraduate Research Project with Dr. Shaowu Pan. The dataset in this specific pack is a synthetic CFD-style airfoil flow field created to exercise ParaView asset-production workflows. It contains:
 
 - `velocity`: vector field for streamlines and glyph inspection.
 - `speed`: scalar velocity magnitude.

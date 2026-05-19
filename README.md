@@ -1,6 +1,6 @@
 # URP: CGNS Airfoil Visualization and ParaView Evidence
 
-URP is a scientific visualization project for inspecting a NACA 0012 airfoil CGNS dataset through a FastAPI/PyVista backend, a React/Three.js viewer, and reproducible ParaView evidence artifacts.
+URP is a scientific visualization project from an RPI Undergraduate Research Project with [Dr. Shaowu Pan](https://faculty.rpi.edu/shaowu-pan), focused on inspecting a NACA 0012 airfoil CGNS dataset through a FastAPI/PyVista backend, a React/Three.js viewer, and reproducible ParaView evidence artifacts.
 
 ## Reviewer Path
 
@@ -47,7 +47,7 @@ The dedicated application-ready project lives in `paraview-cfd-visualization-pac
 
 ## Scope Note
 
-This repository demonstrates scientific visualization, CGNS/VTK data handling, and ParaView pipeline construction. The included wake-field dataset is synthetic and should be used as a visualization/evaluation asset, not as a validated CFD solver result.
+This repository demonstrates scientific visualization, CGNS/VTK data handling, and ParaView pipeline construction in the context of an RPI URP with Dr. Shaowu Pan. The included wake-field dataset is synthetic and should be used as a visualization/evaluation asset, not as a validated CFD solver result.
 
 ## AI Visualization Evaluation
 
