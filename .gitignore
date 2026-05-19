@@ -44,3 +44,4 @@ yarn-error.log*
 # Project specific
 /data/files/*.cgns
 evidence/**/*.log
+paraview-cfd-visualization-pack/outputs/frames/

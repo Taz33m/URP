@@ -18,6 +18,16 @@ REQUIRED = [
     "evidence/paraview/wake-flow-field.png",
     "evidence/paraview/wake-flow-field.pvsm",
     "evidence/paraview/wake-inspection-readme.md",
+    "paraview-cfd-visualization-pack/data/airfoil_flow_field.vti",
+    "paraview-cfd-visualization-pack/data/airfoil_body.vtp",
+    "paraview-cfd-visualization-pack/states/airfoil_pipeline.pvsm",
+    "paraview-cfd-visualization-pack/outputs/01_pressure_field.png",
+    "paraview-cfd-visualization-pack/outputs/02_velocity_streamlines.png",
+    "paraview-cfd-visualization-pack/outputs/03_slice_plane_velocity.png",
+    "paraview-cfd-visualization-pack/outputs/04_wake_vorticity.png",
+    "paraview-cfd-visualization-pack/outputs/airfoil_flow_animation.mp4",
+    "paraview-cfd-visualization-pack/notes/visualization_decisions.md",
+    "paraview-cfd-visualization-pack/README.md",
 ]
 
 

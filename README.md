@@ -4,7 +4,7 @@ URP is a scientific visualization project for inspecting a NACA 0012 airfoil CGN
 
 ## Reviewer Path
 
-Start with `public/data/n0012_449-129.cgns`, open the ParaView state in `evidence/paraview/urp-cgns-airfoil-mesh.pvsm`, compare the rendered mesh with `evidence/paraview/urp-cgns-airfoil-mesh.png`, then inspect the synthetic wake-field pack in `evidence/paraview/wake-inspection-readme.md`.
+Start with `paraview-cfd-visualization-pack/README.md`, inspect the rendered outputs in `paraview-cfd-visualization-pack/outputs`, then open `paraview-cfd-visualization-pack/states/airfoil_pipeline.pvsm` in ParaView. For the original CGNS evidence, open `public/data/n0012_449-129.cgns` and compare it with `evidence/paraview/urp-cgns-airfoil-mesh.png`.
 
 ## Evidence Tiers
 
@@ -15,6 +15,24 @@ Start with `public/data/n0012_449-129.cgns`, open the ParaView state in `evidenc
 **Web visualization evidence:** React/Three.js and FastAPI/PyVista code for loading, extracting, and rendering CGNS mesh data in a browser.
 
 ## Included Evidence
+
+### CFD Flow Visualization Pack
+
+The dedicated application-ready project lives in `paraview-cfd-visualization-pack/`.
+
+| Artifact | Purpose |
+| --- | --- |
+| `paraview-cfd-visualization-pack/data/airfoil_flow_field.vti` | Synthetic CFD-style airfoil vector/scalar field |
+| `paraview-cfd-visualization-pack/data/airfoil_body.vtp` | ParaView-readable airfoil body geometry |
+| `paraview-cfd-visualization-pack/states/airfoil_pipeline.pvsm` | Reproducible ParaView pipeline state |
+| `paraview-cfd-visualization-pack/scripts/generate_visuals.py` | `pvpython` automation for data, screenshots, state, and MP4 |
+| `paraview-cfd-visualization-pack/outputs/01_pressure_field.png` | Pressure coefficient view |
+| `paraview-cfd-visualization-pack/outputs/02_velocity_streamlines.png` | Streamline view |
+| `paraview-cfd-visualization-pack/outputs/03_slice_plane_velocity.png` | Slice/clip velocity view |
+| `paraview-cfd-visualization-pack/outputs/04_wake_vorticity.png` | Wake/vorticity view |
+| `paraview-cfd-visualization-pack/outputs/airfoil_flow_animation.mp4` | 20-second camera animation |
+
+### Original URP CGNS Evidence
 
 | Artifact | Purpose |
 | --- | --- |
@@ -44,6 +62,7 @@ Install ParaView 6.1 or newer, then run the scripts with `pvpython`:
 /Applications/ParaView-6.1.0-arm64.app/Contents/bin/pvpython scripts/render_airfoil_paraview.py
 python3 scripts/generate_wake_field.py
 /Applications/ParaView-6.1.0-arm64.app/Contents/bin/pvpython scripts/render_wake_paraview.py
+/Applications/ParaView-6.1.0-arm64.app/Contents/bin/pvpython paraview-cfd-visualization-pack/scripts/generate_visuals.py
 python3 scripts/check_evidence.py
 ```
 
