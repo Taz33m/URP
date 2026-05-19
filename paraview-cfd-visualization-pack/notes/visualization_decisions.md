@@ -23,7 +23,7 @@ The airfoil body is also exported as `data/airfoil_body.vtp` so ParaView can ren
 
 `04_wake_vorticity.png` uses a diverging range around zero for `vorticity_z` so wake shear structures remain visible.
 
-`airfoil_flow_animation.mp4` is a 20-second camera move over the same ParaView pipeline. It prioritizes stable camera motion, visible scalar legend, and reproducibility over cinematic effects.
+`airfoil_flow_animation.mp4` is a 20-second four-scene ParaView walkthrough. It moves through pressure coefficient, velocity streamlines, slice/clip inspection, and wake vorticity so the animation demonstrates multiple pipeline outputs instead of a single scalar-field camera pan.
 
 ## Review Notes
 

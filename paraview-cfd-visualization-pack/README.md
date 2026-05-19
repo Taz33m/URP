@@ -19,7 +19,7 @@ The checked-in `.pvsm` uses repo-root-relative data paths. If ParaView is launch
 | `outputs/02_velocity_streamlines.png` | Stream traces and directionality of the airflow |
 | `outputs/03_slice_plane_velocity.png` | Slice/clip-style inspection of the velocity field |
 | `outputs/04_wake_vorticity.png` | Wake and vorticity structure behind the airfoil |
-| `outputs/airfoil_flow_animation.mp4` | 20-second camera animation with stable movement and legend |
+| `outputs/airfoil_flow_animation.mp4` | 20-second four-scene ParaView walkthrough: pressure, streamlines, slice/clip, and wake vorticity |
 
 ## Reproduce
 

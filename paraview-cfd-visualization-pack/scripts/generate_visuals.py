@@ -381,45 +381,114 @@ def render_vorticity() -> None:
 
 
 def render_animation() -> None:
-    ResetSession()
-    source = OpenDataFile(str(DATA_DIR / "airfoil_flow_field.vti"))
-    plane = midplane_slice(source)
-    view = base_view(1280, 720)
-    display = Show(plane, view, "GeometryRepresentation")
-    display.Representation = "Surface"
-    color_display(display, view, "speed", [0.0, 0.12, 0.17, 0.40, 0.65, 0.05, 0.50, 0.62, 1.0, 0.95, 0.74, 0.24, 1.65, 0.88, 0.18, 0.16])
-    stream = StreamTracer(Input=source, SeedType="Line")
-    stream.Vectors = ["POINTS", "velocity"]
-    stream.SeedType.Point1 = [-0.78, -1.05, 0.0]
-    stream.SeedType.Point2 = [-0.78, 1.05, 0.0]
-    stream.SeedType.Resolution = 38
-    stream.MaximumStreamlineLength = 5.4
-    stream_display = Show(stream, view, "GeometryRepresentation")
-    stream_display.LineWidth = 1.7
-    stream_display.DiffuseColor = [0.03, 0.04, 0.06]
-    if getattr(stream_display, "LookupTable", None):
-        HideScalarBarIfNotNeeded(stream_display.LookupTable, view)
-    add_body(view)
-    text = add_text(view, "Airfoil flow field: speed, streamlines, and wake structure")
+    def pressure_scene():
+        ResetSession()
+        source = OpenDataFile(str(DATA_DIR / "airfoil_flow_field.vti"))
+        plane = midplane_slice(source)
+        view = base_view(1280, 720)
+        display = Show(plane, view, "GeometryRepresentation")
+        display.Representation = "Surface"
+        color_display(
+            display,
+            view,
+            "pressure_coefficient",
+            [-1.05, 0.07, 0.19, 0.48, -0.25, 0.05, 0.48, 0.62, 0.35, 0.95, 0.78, 0.30, 1.25, 0.78, 0.12, 0.12],
+        )
+        add_body(view)
+        add_text(view, "01 Pressure coefficient: scalar field + legend")
+        return view
 
-    total_frames = 120
-    for frame in range(total_frames):
-        t = frame / (total_frames - 1)
-        focal_x = 0.42 + 2.05 * t
-        scale = 1.18 + 0.70 * math.sin(math.pi * t) + 0.25 * t
-        z = 7.0 - 1.15 * math.sin(math.pi * t)
-        y = -0.28 * math.sin(2.0 * math.pi * t)
-        view.CameraPosition = [focal_x, y, z]
+    def streamline_scene():
+        ResetSession()
+        source = OpenDataFile(str(DATA_DIR / "airfoil_flow_field.vti"))
+        plane = midplane_slice(source)
+        view = base_view(1280, 720)
+        bg = Show(plane, view, "GeometryRepresentation")
+        bg.Representation = "Surface"
+        bg.Opacity = 0.30
+        color_display(bg, view, "speed", [0.0, 0.12, 0.17, 0.40, 0.65, 0.05, 0.50, 0.62, 1.0, 0.95, 0.74, 0.24, 1.65, 0.88, 0.18, 0.16])
+        stream = StreamTracer(Input=source, SeedType="Line")
+        stream.Vectors = ["POINTS", "velocity"]
+        stream.SeedType.Point1 = [-0.78, -1.12, 0.0]
+        stream.SeedType.Point2 = [-0.78, 1.12, 0.0]
+        stream.SeedType.Resolution = 52
+        stream.MaximumStreamlineLength = 5.4
+        stream_display = Show(stream, view, "GeometryRepresentation")
+        stream_display.LineWidth = 2.4
+        ColorBy(stream_display, ("POINTS", "speed"))
+        if getattr(stream_display, "LookupTable", None):
+            HideScalarBarIfNotNeeded(stream_display.LookupTable, view)
+        add_body(view)
+        add_text(view, "02 Velocity streamlines: vector array + stream tracer")
+        return view
+
+    def slice_scene():
+        ResetSession()
+        source = OpenDataFile(str(DATA_DIR / "airfoil_flow_field.vti"))
+        clip = Clip(Input=source)
+        clip.ClipType = "Plane"
+        clip.ClipType.Origin = [0.0, 0.0, 0.0]
+        clip.ClipType.Normal = [0.0, 1.0, 0.0]
+        clip.Invert = 0
+        view = base_view(1280, 720)
+        display = Show(clip, view, "GeometryRepresentation")
+        display.Representation = "Surface With Edges"
+        display.EdgeColor = [0.18, 0.20, 0.22]
+        display.LineWidth = 0.25
+        color_display(display, view, "speed", [0.0, 0.12, 0.17, 0.40, 0.65, 0.05, 0.50, 0.62, 1.0, 0.95, 0.74, 0.24, 1.65, 0.88, 0.18, 0.16])
+        add_body(view)
+        add_text(view, "03 Slice/clip inspection: half-volume velocity context")
+        return view
+
+    def vorticity_scene():
+        ResetSession()
+        source = OpenDataFile(str(DATA_DIR / "airfoil_flow_field.vti"))
+        plane = midplane_slice(source)
+        view = base_view(1280, 720)
+        display = Show(plane, view, "GeometryRepresentation")
+        display.Representation = "Surface"
+        color_display(
+            display,
+            view,
+            "vorticity_z",
+            [-9.0, 0.13, 0.16, 0.42, -1.5, 0.16, 0.64, 0.74, 0.0, 0.96, 0.96, 0.88, 1.5, 0.93, 0.56, 0.20, 9.0, 0.65, 0.08, 0.10],
+        )
+        add_body(view)
+        add_text(view, "04 Wake vorticity: derived curl field + diverging scale")
+        return view
+
+    def camera_top_down(view, t: float, focal_start: float, focal_end: float, scale_start: float, scale_end: float) -> None:
+        focal_x = focal_start + (focal_end - focal_start) * t
+        scale = scale_start + (scale_end - scale_start) * (0.5 - 0.5 * math.cos(math.pi * t))
+        view.CameraPosition = [focal_x, 0.0, 8.0]
         view.CameraFocalPoint = [focal_x, 0.0, 0.0]
         view.CameraViewUp = [0.0, 1.0, 0.0]
         view.CameraParallelProjection = 1
         view.CameraParallelScale = scale
-        if frame == 42:
-            text.Text = "Velocity streamlines reveal attached flow and wake deficit"
-        elif frame == 82:
-            text.Text = "Downstream camera pass focuses on wake structure"
-        Render(view)
-        SaveScreenshot(str(FRAME_DIR / f"frame_{frame:04d}.png"), view, ImageResolution=[1280, 720])
+
+    def camera_oblique_clip(view, t: float) -> None:
+        angle = -0.30 + 0.60 * t
+        view.CameraPosition = [2.15 + 0.18 * math.sin(angle), -3.35 + 0.36 * t, 2.15 + 0.12 * math.cos(angle)]
+        view.CameraFocalPoint = [1.45 + 0.22 * t, 0.0, 0.0]
+        view.CameraViewUp = [-0.18, 0.28, 0.94]
+        view.CameraParallelProjection = 1
+        view.CameraParallelScale = 1.64 - 0.16 * math.sin(math.pi * t)
+
+    frame_index = 0
+    segments = [
+        (pressure_scene, 30, lambda view, t: camera_top_down(view, t, 0.95, 1.22, 1.82, 1.58)),
+        (streamline_scene, 30, lambda view, t: camera_top_down(view, t, 0.88, 1.72, 1.70, 1.86)),
+        (slice_scene, 30, camera_oblique_clip),
+        (vorticity_scene, 30, lambda view, t: camera_top_down(view, t, 1.20, 2.42, 1.78, 1.52)),
+    ]
+    for scene_factory, frame_count, camera_fn in segments:
+        view = scene_factory()
+        for local_frame in range(frame_count):
+            t = local_frame / (frame_count - 1)
+            camera_fn(view, t)
+            Render(view)
+            SaveScreenshot(str(FRAME_DIR / f"frame_{frame_index:04d}.png"), view, ImageResolution=[1280, 720])
+            frame_index += 1
 
     ffmpeg = shutil.which("ffmpeg")
     if not ffmpeg:
