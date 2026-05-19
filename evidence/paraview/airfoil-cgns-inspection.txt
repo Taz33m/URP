@@ -1,0 +1,21 @@
+URP NACA 0012 CGNS ParaView Inspection
+dataset=public/data/n0012_449-129.cgns
+reader=CGNSSeriesReader
+
+Fetched VTK object tree:
+vtkMultiBlockDataSet
+blocks=1
+block 0
+  vtkMultiBlockDataSet
+  blocks=1
+  block 0
+    vtkStructuredGrid
+    points=115842 cells=57344
+    bounds=(-484.4566167475189, 501.00000780234484, -1.0, 0.0, -507.8060810511724, 507.80608075798204)
+    point_arrays=[]
+    cell_arrays=[]
+
+Interpretation:
+- ParaView opens the checked-in CGNS file with CGNSSeriesReader.
+- The dataset resolves to a nested multiblock containing a vtkStructuredGrid.
+- This artifact is a mesh/format-inspection sample, not a claimed solver validation study.

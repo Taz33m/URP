@@ -1,7 +1,9 @@
 import os
-# Configure PyVista for off-screen rendering
-os.environ["PYVISTA_OFF_SCREEN"] = "true"
-os.environ["PYVISTA_USE_PANEL"] = "false"
+from pathlib import Path
+
+# Configure PyVista for off-screen rendering before importing pyvista.
+os.environ.setdefault("PYVISTA_OFF_SCREEN", "true")
+os.environ.setdefault("PYVISTA_USE_PANEL", "false")
 
 from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
@@ -10,7 +12,6 @@ from fastapi.exceptions import HTTPException
 from fastapi.exception_handlers import http_exception_handler
 import pyvista as pv
 import numpy as np
-from pathlib import Path
 import sys
 import traceback
 import uvicorn
@@ -47,9 +48,9 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# Hardcode the data directory and file
-DATA_DIR = Path("/Users/tazeemmahashin/Desktop/URP_1/data/files")
-DEFAULT_FILE = "fc_000_vol.cgns"
+ROOT_DIR = Path(__file__).resolve().parents[2]
+DATA_DIR = Path(os.environ.get("URP_DATA_DIR", ROOT_DIR / "public" / "data")).expanduser()
+DEFAULT_FILE = "n0012_449-129.cgns"
 
 def extract_block(mesh):
     """Recursively extract mesh from nested MultiBlock structure"""

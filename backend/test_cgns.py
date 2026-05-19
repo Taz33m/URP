@@ -10,8 +10,8 @@ def extract_mesh_from_multiblock(block):
         return extract_mesh_from_multiblock(block[0])
     return block
 
-# Test file reading
-data_dir = Path(__file__).parent.parent / "data" / "files"
+# Test file reading from the checked-in sample dataset.
+data_dir = Path(__file__).resolve().parents[1] / "public" / "data"
 test_file = data_dir / "n0012_449-129.cgns"
 
 print(f"Testing file: {test_file}")

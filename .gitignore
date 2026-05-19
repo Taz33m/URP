@@ -5,6 +5,9 @@ __pycache__/
 *.so
 .Python
 env/
+venv/
+.venv/
+backend/venv/
 build/
 develop-eggs/
 dist/
@@ -40,3 +43,4 @@ yarn-error.log*
 
 # Project specific
 /data/files/*.cgns
+evidence/**/*.log
